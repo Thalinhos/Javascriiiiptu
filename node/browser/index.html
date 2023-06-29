@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="hi">teste</div>
+    <button id="btt">Clique aqui!</button>
+    
+
+<script type="module" src="index.js" charset="UTF-8"></script>
+
+   <script>
+
+    let button = document.getElementById('btt');
+    let element = document.getElementById("hi")
+
+    </script>
+    <script>
+        button.addEventListener('click', function(){
+            if (element.textContent !== 'teste'){
+                element.innerHTML = 'teste'
+                console.log('gol');
+                
+            } else if (element.textContent === 'teste') {
+            element.innerHTML = 'clicouuu'; 
+            console.log('click click');
+            
+            } else {
+            element.innerHTML = 'teste';
+            console.log('gol');
+            }});
+
+       </script>
+
+</body>
+</html>
