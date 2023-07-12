@@ -1,0 +1,35 @@
+<html>
+    <div>
+        <p>Counter: -<span id="counter">0</span>-</p>
+        <button id="mybtn">Clica aqui</button>
+
+
+        <script>
+            const botao = document.getElementById('mybtn');
+            
+
+
+
+
+
+
+        function add(){
+            let counter = 0;
+
+            function addCounter() {
+                document.getElementById('counter').innerText = counter++; 
+            }
+            
+            return addCounter;
+            
+            }
+
+
+            let incrementCounter = add();
+            botao.addEventListener('click', incrementCounter);
+
+
+
+        </script>
+    </div>
+</html>
