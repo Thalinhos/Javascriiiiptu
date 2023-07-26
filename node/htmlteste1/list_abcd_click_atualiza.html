@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>Hello World</h1>
+    <br>
+    <p id="text"></p>
+    <button id="roll">Click</button>
+
+
+    <script>
+        function main(){
+            let list = ['a', 'b', 'c', 'd']
+            let index = 0
+
+            document.getElementById('text').innerHTML = list[index]
+            document.getElementById('roll').addEventListener('click', change)
+
+            function change() {
+                index = ((index + 1) % list.length);
+                document.getElementById('text').innerText = list[index]
+            }
+        
+        }
+        main()
+            
+       
+        
+
+        
+
+
+
+    </script>
+</body>
+</html>
