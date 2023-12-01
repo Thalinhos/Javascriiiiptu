@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Redimensionamento de Foto de Perfil</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://unpkg.com/cropperjs/dist/cropper.min.css" rel="stylesheet">
+</head>
+<body>
+  <input type="file" id="inputImage">
+  <br>
+  <img id="previewImage" src="#" alt="Preview" style="max-width: 300px; display: none;">
+  <br>
+  <button id="cropButton" style="display: none;">Salvar</button>
+  <button id="cancelButton" style="display: none;">Cancelar</button>
+
+  <script src="https://unpkg.com/cropperjs/dist/cropper.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      let cropper;
+
+      $('#inputImage').change(function(e) {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function() {
+          const previewImage = $('#previewImage');
+          previewImage.css('display', 'block');
+          $('#cropButton, #cancelButton').css('display', 'block');
+          previewImage.attr('src', reader.result);
+
+          cropper = new Cropper(previewImage[0], {
+            aspectRatio: 1,
+            viewMode: 1,
+            autoCropArea: 1,
+            movable: true,
+            zoomable: true,
+            rotatable: true
+          });
+
+          $('#cropButton').click(function() {
+            const canvas = cropper.getCroppedCanvas({
+              width: 300,
+              height: 300
+            });
+              // function to get natural width and height
+              //$('#cropButton').click(function() {
+              //const naturalWidth = cropper.getImageData().naturalWidth;
+              // const naturalHeight = cropper.getImageData().naturalHeight;
+              // const canvas = cropper.getCroppedCanvas({
+              // width: naturalWidth,
+              // height: naturalHeight
+            //});
+
+
+
+            const croppedImage = new Image();
+            croppedImage.src = canvas.toDataURL('image/jpeg');
+            croppedImage.id = 'newImageCropper';
+            $('body').append(croppedImage);
+
+            cropper.destroy();
+            $('#previewImage').attr('src', '');
+            $('#inputImage').val('');
+            hideElements();
+          });
+
+          $('#cancelButton').click(function() {
+            cropper.destroy();
+            $('#previewImage').attr('src', '');
+            $('#inputImage').val('');
+            $('#newImageCropper').remove();
+            $('#cancelButton').css('display', 'none');
+            hideElements();
+          });
+        };
+
+        if (file) {
+          reader.readAsDataURL(file);
+        }
+      });
+
+      function hideElements() {
+        $('#previewImage').css('display', 'none');
+        $('#cropButton').css('display', 'none');
+      }
+    });
+  </script>
+</body>
+</html>
+
+

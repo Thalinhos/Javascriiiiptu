@@ -1,0 +1,11 @@
+
+function handleKeyDown(event) {
+  if (event.key == "Control"|| event.key == "ControlLeft" || event.keyCode == "174" || event.metaKey && event.key === "Meta" && event.code === "MetaLeft") { // Verifica se a tecla pressionada é a tecla F10
+    document.body.classList.add('blackout');
+
+    setTimeout(function() {
+      document.body.classList.remove('blackout');
+    }, 2000); 
+  }
+}
+document.addEventListener('keydown', handleKeyDown);
