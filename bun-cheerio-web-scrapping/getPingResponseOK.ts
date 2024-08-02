@@ -13,7 +13,7 @@ for(let i = 0; i < 255; i++){
             return
         }
         if(stdout){
-            if(stdout[82] == 3 && stdout[83] == 2){
+            if(stdout[82] == 3 && stdout[83] == 2 || stdout[84] == 3 && stdout[85] == 2){
                 fs.appendFile('pings.txt', `${ipAddressBase}${i} - OK` + '\n', (err) => {
                     if(err){
                         console.log(err)
