@@ -12,7 +12,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
   await page.setViewport({ width: 1920, height: 1080 }); //ensure the future screenshot d'have a full view
 
-  await page.goto('https://10.244.37.70', {
+  await page.goto('https://00.000.00.00', {
     waitUntil: 'networkidle2', //wait till site to be full loaded
   });
 
