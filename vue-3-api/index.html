@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+     <!-- <script src="./vue@3.js"></script> -->
+
+</head>
+    <body>
+        <!-- vue api -->
+        <div id="app">
+            <div id="message"> 
+                <p>{{ message }} </p> 
+            </div>
+
+            <div id="counter">
+                <p>Counter is {{ counter }}</p>
+                <button @click="increment">Click to increment</button>
+            </div>
+
+            <div id="v-for">
+                <div v-if="goals.length > 0">
+                    <ul v-for="(goal, index) in goals">
+                        <li :key="index">{{ goal }} - <span @click="excludeGoal(index)"> <button> x </button></span></li>
+                        <p> {{index}} </p>
+                    </ul>
+                </div>
+                <div v-else>
+                    <p>You have no goals to show up</p>
+                </div>
+                <div>
+                    <button @click="swapOut">Click here to swap goals out</button>    
+                </div>
+            </div>
+
+            <div>
+                <p>{{ goalToAdd }}</p>
+                <input v-model="goalToAdd" @keyup.enter="addGoal" required>
+                <br>
+                <button @click="addGoal" style="margin-top: 1rem;">Add an Goal</button>
+            </div>
+        </div>
+        <!-- vue api -->
+
+        <hr style="margin: 1rem;">
+
+        <!-- components -->
+        <div id="app2">
+            <button-counter></button-counter>
+        </div>
+        <hr style="margin: 1rem;">
+        <!-- components -->
+        <div id="app3">
+            <for-component></for-component>
+        </div>
+    </body>
+</html>
+
+<script>
+    //////////////////////////////////////////////////////////////////////////////////////
+    // vue api
+   const app = Vue.createApp({
+        data(){
+            return {
+                message: "hello wolrd",
+                counter: 0,
+                goals: ['learn more view', 'study viue and laravel', 'keep going!'],
+                goalToAdd: ""
+            }
+        },
+        methods: {
+            increment(){
+                this.counter++;
+            },
+            swapOut(){
+                this.goals.pop()
+            },
+            addGoal(){
+                if (this.goalToAdd.trim() === ""){
+                    return
+                }
+                this.goals.push(this.goalToAdd);
+                this.goalToAdd = ""
+            },
+            excludeGoal(goal){
+                this.goals.splice(goal, 1);
+            }
+        }
+    });
+    app.mount('#app')
+
+    ////////////////////////////////////////////////////////////////////
+    // components
+    const app2 = Vue.createApp({})
+    app2.component('button-counter', {
+    data() {
+        return {
+            count: 0
+        }
+    },
+    methods: {
+        increment(){
+            this.count++
+        }
+    },
+    template: `
+        <button v-on:click="increment">
+        Você me clicou {{ count }} vezes.
+        </button>`
+    })
+    app2.mount('#app2')
+
+    ////////////////////////////////////////////////////////////////////
+    //another component
+    const app3 = Vue.createApp({});
+    app3.component('for-component', {
+        data(){
+            return {
+                value: 0
+            }
+        },
+        template: `
+            <h1>teste from app3 {{value}}</h1>
+        `
+    })
+    app3.mount('#app3')
+</script>
