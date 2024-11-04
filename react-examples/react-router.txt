@@ -1,0 +1,74 @@
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import Home from './pages/Home'
+import About from './pages/About'
+import NotFoundPage from './pages/NotFoundPage'
+import ProtectedRoute from './pages/ProtectedRoute'
+import LoginFormComponent from './pages/LoginForm'
+
+const router = createBrowserRouter([
+  {path: '/', element: <Home />, errorElement: <NotFoundPage />},
+  {path: 'about', element: <About />},
+  {path: '/protected', element: <ProtectedRoute />},
+  {path: '/login', element: <LoginFormComponent />}
+
+])
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <RouterProvider router={router}/>
+  </StrictMode>
+)
+
+
+//////////////////////////////////////// example to how navigate by link
+import { Link } from "react-router-dom";
+
+export default function About() {
+  return (
+    <div>
+      <h1>Sobre nós</h1>
+      <Link to='/'>Voltar</Link>
+    </div>
+  );
+}
+
+//////////////////////// example how to redirect using 'navigate'
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+export default function LoginFormComponent() {
+
+    const navigate = useNavigate();
+
+    const [nome, setNome] = useState('');
+    const [senha, setSenha] = useState('');
+    const [mensagem, setMensagem] = useState('');
+    
+
+    const handleLogin = async (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+
+        const response = await fetch("http://localhost:3000/auth/authWithUserAndPass", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ "identity": nome, "password": senha })
+        });
+
+        const res = await response.json();
+        
+        
+        if (!response.ok) {
+            setMensagem(res.message || "Erro ao enviar dados")
+        } else {
+            if (res.token){
+                localStorage.setItem('token', res.token);
+                localStorage.setItem('username', nome);
+            navigate('/') /////////////////////////////////////////  <--- here
+            }
+            else{
+                setMensagem(res.message || "Erro ao enviar dados")
+            }
+        }
+    };
